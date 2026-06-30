@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Árabe Perfumería & Boutique | El Banco, Magdalena</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ─── REINICIO Y CAJA ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ─── VARIABLES GLOBALES ─── */
+  :root {
+    --dorado: #C9A84C;
+    --dorado-claro: #E8C96A;
+    --dorado-oscuro: #8B6914;
+    --dorado-tenue: rgba(201, 168, 76, 0.12);
+    --negro: #0A0A0A;
+    --negro-tarjeta: #111111;
+    --negro-suave: #1A1A1A;
+    --crema: #F5EDD6;
+    --crema-apagada: #D4C4A0;
+    --texto-apagado: #777;
+    --verde-wa: #25D366;
+    --radio: 16px;
+    --radio-pequeno: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--crema);
+    font-family: 'Inter', sans-serif;
+    /* overflow-x:hidden en body/html hace que position:fixed quede invisible
+       en Safari/Chrome móvil — se elimina y se contiene en .pagina-wrapper */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Contiene el desbordamiento horizontal sin romper los botones fixed */
+  .pagina-wrapper {
+    overflow-x: clip;   /* clip no crea scroll container → fixed sigue funcionando */
+    position: relative;
+  }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN HÉROE
+  ══════════════════════════════════════════ */
+  .seccion-heroe {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 140px;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a1200 0%, var(--negro) 70%);
+  }
+
+  #lienzo-particulas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+
+
+  .linea-lateral {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 1px;
+    height: 180px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.25), transparent);
+    pointer-events: none;
+  }
+  .linea-lateral--izquierda { left: 24px; }
+  .linea-lateral--derecha  { right: 24px; }
+
+  .heroe-contenido { position: relative; z-index: 1; }
+
+  .heroe-etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    padding: 7px 18px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    animation: subir-opacidad 0.8s ease both;
+  }
+  .heroe-etiqueta svg { opacity: 0.7; }
+
+  .heroe-logo-circulo {
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    background: radial-gradient(circle, rgba(201,168,76,0.14) 0%, transparent 70%);
+    box-shadow: 0 0 50px rgba(201,168,76,0.25), inset 0 0 25px rgba(201,168,76,0.05);
+    animation: subir-opacidad 0.8s 0.1s ease both, brillo-logo 3s ease-in-out infinite 1s;
+    position: relative;
+  }
+  .heroe-logo-circulo::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  @keyframes brillo-logo {
+    0%, 100% { box-shadow: 0 0 30px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.05); }
+    50% { box-shadow: 0 0 70px rgba(201,168,76,0.5), inset 0 0 35px rgba(201,168,76,0.1); }
+  }
+
+  .heroe-logo-texto {
+    font-family: 'Cinzel', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--dorado);
+    letter-spacing: 2px;
+  }
+
+  .heroe-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 10vw, 56px);
+    font-weight: 700;
+    line-height: 1.08;
+    margin-bottom: 10px;
+    animation: subir-opacidad 0.8s 0.2s ease both;
+    letter-spacing: -0.5px;
+  }
+  .heroe-titulo span { color: var(--dorado); font-style: italic; }
+
+  .heroe-subtitulo {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--dorado-claro);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.75;
+    animation: subir-opacidad 0.8s 0.3s ease both;
+  }
+
+  /* Dirección en el héroe */
+  .heroe-direccion {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--crema-apagada);
+    letter-spacing: 1px;
+    margin-bottom: 22px;
+    opacity: 0.8;
+    animation: subir-opacidad 0.8s 0.35s ease both;
+  }
+  .heroe-direccion svg { color: var(--dorado); flex-shrink: 0; }
+
+  .divisor-dorado {
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--dorado), transparent);
+    margin: 0 auto 24px;
+  }
+
+  .heroe-descripcion {
+    font-size: 15px;
+    color: var(--crema-apagada);
+    line-height: 1.75;
+    max-width: 320px;
+    margin: 0 auto 40px;
+    font-weight: 300;
+    animation: subir-opacidad 0.8s 0.4s ease both;
+  }
+
+  .heroe-grupo-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    animation: subir-opacidad 0.8s 0.5s ease both;
+  }
+
+  /* ─── BOTÓN WHATSAPP ─── */
+  .boton-wa {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--verde-wa);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    width: 100%; max-width: 300px;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+  }
+  .boton-wa::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+    border-radius: 50px;
+  }
+  .boton-wa:active { transform: scale(0.97); }
+  .boton-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  /* ─── BOTÓN CONTORNO DORADO ─── */
+  .boton-contorno {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(201,168,76,0.45);
+    color: var(--dorado);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    width: 100%; max-width: 300px;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .boton-contorno:active { background: rgba(201,168,76,0.1); border-color: var(--dorado); }
+  .boton-contorno svg { width: 16px; height: 16px; }
+
+  .indicador-scroll {
+    position: absolute;
+    bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: subir-opacidad 1s 1s ease both;
+  }
+  .indicador-scroll span { font-size: 10px; letter-spacing: 2px; color: var(--texto-apagado); text-transform: uppercase; }
+  .linea-scroll {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--dorado), transparent);
+    animation: caer-scroll 2s ease-in-out infinite;
+  }
+  @keyframes caer-scroll {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    40% { opacity: 1; transform: scaleY(1); }
+    80% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* ══════════════════════════════════════════
+     BANNER PROMOCIÓN DEL MES
+  ══════════════════════════════════════════ */
+  .banner-promo {
+    background: linear-gradient(135deg, #1a0e00 0%, #2a1800 50%, #1a0e00 100%);
+    border-top: 2px solid var(--dorado);
+    border-bottom: 2px solid var(--dorado);
+    padding: 18px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner-promo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(201,168,76,0.03) 10px,
+      rgba(201,168,76,0.03) 20px
+    );
+  }
+  .banner-promo-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .banner-promo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--dorado);
+    color: var(--negro);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 50px;
+  }
+  .banner-promo-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: var(--crema);
+  }
+  .banner-promo-titulo span { color: var(--dorado); font-style: italic; }
+  .banner-promo-desc {
+    font-size: 13px;
+    color: var(--crema-apagada);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+  .banner-promo-precio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .precio-antes {
+    font-size: 14px;
+    color: var(--texto-apagado);
+    text-decoration: line-through;
+  }
+  .precio-ahora {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dorado);
+  }
+  .precio-descuento {
+    background: #e53935;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+  }
+  .banner-promo-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--dorado);
+    color: var(--negro);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .banner-promo-cta:active { transform: scale(0.97); }
+
+  /* ══════════════════════════════════════════
+     BARRA DE ESTADÍSTICAS
+  ══════════════════════════════════════════ */
+  .barra-estadisticas {
+    background: var(--negro-tarjeta);
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    padding: 32px 24px;
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+  }
+  .estadistica { text-align: center; }
+  .estadistica-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--dorado);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .estadistica-etiqueta { font-size: 10px; letter-spacing: 2px; color: var(--texto-apagado); text-transform: uppercase; }
+
+  /* ══════════════════════════════════════════
+     SECCIONES COMPARTIDAS
+  ══════════════════════════════════════════ */
+  .seccion { padding: 64px 24px; }
+
+  .seccion-etiqueta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+    opacity: 0.8;
+  }
+
+  .seccion-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 7vw, 40px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .seccion-titulo em { color: var(--dorado); font-style: italic; }
+
+  .seccion-cuerpo {
+    font-size: 14px;
+    color: var(--crema-apagada);
+    line-height: 1.85;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .divisor-lateral {
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, var(--dorado), transparent);
+    margin: 22px 0;
+  }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN CATEGORÍAS
+  ══════════════════════════════════════════ */
+  .seccion-categorias { background: var(--negro-suave); }
+
+  .cuadricula-categorias {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .tarjeta-categoria {
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.14);
+    border-radius: var(--radio);
+    padding: 28px 18px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s, transform 0.25s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tarjeta-categoria::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tarjeta-categoria:active {
+    transform: scale(0.97);
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 0 24px rgba(201,168,76,0.1);
+  }
+  .tarjeta-categoria:active::before { opacity: 1; }
+
+  .categoria-icono {
+    width: 48px; height: 48px;
+    margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    color: var(--dorado);
+  }
+  .categoria-icono svg { width: 24px; height: 24px; }
+
+  .categoria-nombre {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--dorado-claro);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+  }
+
+  .categoria-descripcion { font-size: 11px; color: var(--texto-apagado); line-height: 1.55; }
+
+  .tarjeta-categoria--destacada {
+    grid-column: span 2;
+    display: flex; align-items: center; gap: 20px;
+    text-align: left;
+    padding: 24px 22px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.07) 0%, var(--negro-tarjeta) 65%);
+    border-color: rgba(201,168,76,0.28);
+  }
+  .tarjeta-categoria--destacada .categoria-icono {
+    width: 60px; height: 60px;
+    margin: 0;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+  .tarjeta-categoria--destacada .categoria-icono svg { width: 30px; height: 30px; }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN MARCAS
+  ══════════════════════════════════════════ */
+  .fila ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .fila .li{
+    width: 25%;
+    height: 25%;
+  }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN FOTOS DE LA TIENDA
+  ══════════════════════════════════════════ */
+  .seccion-fotos { background: var(--negro); padding: 64px 24px; }
+
+  /*
+    MÓVIL (por defecto):
+  */
+  .fotos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 36px;
+  }
+
+  /* Fila inferior con las 3 fotos pequeñas */
+  .fotos-fila-pequenas {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .foto-card {
+    border-radius: var(--radio);
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.18);
+    position: relative;
+    background: var(--negro-suave);
+    flex-shrink: 0;
+  }
+  .foto-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Fachada en móvil: ancho completo, proporción 430:393 */
+  .foto-card--fachada {
+    width: 100%;
+    aspect-ratio: 430 / 393;
+  }
+
+  /* Cada foto pequeña en móvil: 1/3 del ancho, proporción 430:574 */
+  .fotos-fila-pequenas .foto-card--alta {
+    flex: 1 1 0;
+    min-width: 0;
+    aspect-ratio: 430 / 574;
+  }
+
+  .foto-etiqueta {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    padding: 28px 16px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN PRODUCTOS DESTACADOS
+  ══════════════════════════════════════════ */
+  .seccion-productos { background: var(--negro-suave); padding: 64px 24px; }
+
+  /* Scroll horizontal para mantener tamaño fijo en cualquier pantalla */
+  .productos-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 36px;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201,168,76,0.2) transparent;
+  }
+  .productos-scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+  }
+  .productos-scroll-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .productos-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(201,168,76,0.25);
+    border-radius: 4px;
+  }
+
+  .productos-grid {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+  }
+
+  .producto-card {
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.14);
+    border-radius: var(--radio);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    width: 200px;        
+    flex-shrink: 0;
+  }
+  .producto-card:active { transform: scale(0.97); border-color: rgba(201,168,76,0.4); }
+
+  /* Área de imagen cuadrada 1:1 */
+  .producto-imagen {
+    width: 200px;
+    height: 200px;        
+    background: linear-gradient(135deg, #1a1200 0%, #2a1800 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .producto-imagen-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(201,168,76,0.35);
+    width: 100%;
+    height: 100%;
+  }
+  .producto-imagen-placeholder svg {
+    width: 32px;
+    height: 32px;
+  }
+  .producto-imagen-placeholder span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+  }
+  .producto-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: #e53935;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .producto-badge--nuevo { background: var(--dorado); color: var(--negro); }
+  .producto-info { padding: 16px 14px 18px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .producto-nombre {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--dorado-claro);
+    text-transform: uppercase;
+  }
+  .producto-desc { font-size: 11px; color: var(--texto-apagado); line-height: 1.5; }
+  .producto-precio {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dorado);
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .producto-precio-sub { font-size: 10px; color: var(--texto-apagado); font-family: 'Inter', sans-serif; font-weight: 400; }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN DECANTS BOX
+  ══════════════════════════════════════════ */
+  .seccion-decants { background: var(--negro); padding: 64px 24px; }
+  .decants-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, var(--negro-tarjeta) 60%);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 20px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 36px;
+  }
+  .decants-card::before {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 64px;
+    height: 64px;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='1.2' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='7' y='8' width='10' height='14' rx='3'/%3E%3Cpath d='M9 8V5h6v3'/%3E%3Cpath d='M11 3h2'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+  .decants-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--dorado), transparent);
+  }
+  .decants-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--dorado);
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+  .decants-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 6vw, 34px);
+    font-weight: 700;
+    color: var(--crema);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .decants-titulo span { color: var(--dorado); font-style: italic; }
+  .decants-desc {
+    font-size: 14px;
+    color: var(--crema-apagada);
+    line-height: 1.75;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .decants-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .decants-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--crema);
+  }
+  .decants-feature-icon {
+    width: 32px; height: 32px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dorado);
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+  .decants-precio-bloque {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .decants-precio {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dorado);
+    line-height: 1;
+  }
+  .decants-precio-label {
+    font-size: 12px;
+    color: var(--crema-apagada);
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN CLUB PERFULOVERS (VIP)
+  ══════════════════════════════════════════ */
+  .seccion-vip {
+    background: linear-gradient(160deg, #0f0a00 0%, #1a1000 40%, #0f0a00 100%);
+    padding: 64px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .seccion-vip::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .vip-header {
+    text-align: center;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+  }
+  .vip-corona { font-size: 40px; margin-bottom: 10px; display: block; }
+  .vip-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 700;
+    color: var(--crema);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+  .vip-titulo em { color: var(--dorado); font-style: italic; }
+  .vip-subtitulo {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 14px;
+  }
+  .vip-desc {
+    font-size: 14px;
+    color: var(--crema-apagada);
+    line-height: 1.75;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  .vip-card {
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 30px 24px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .vip-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--dorado-oscuro), var(--dorado-claro), var(--dorado-oscuro));
+  }
+  .vip-beneficios {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .vip-beneficio {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 12px;
+  }
+  .vip-beneficio-icono {
+    width: 44px; height: 44px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .vip-beneficio-texto strong {
+    display: block;
+    font-size: 14px;
+    color: var(--crema);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .vip-beneficio-texto span {
+    font-size: 12px;
+    color: var(--texto-apagado);
+    line-height: 1.4;
+  }
+  .boton-vip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--dorado-oscuro), var(--dorado), var(--dorado-claro));
+    color: var(--negro);
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(201,168,76,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .boton-vip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 55%);
+    border-radius: 50px;
+  }
+  .boton-vip:active { transform: scale(0.97); }
+  .vip-nota {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 11px;
+    color: var(--texto-apagado);
+  }
+  .vip-nota a { color: var(--dorado); text-decoration: none; }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN SOBRE NOSOTROS
+  ══════════════════════════════════════════ */
+  .seccion-nosotros { background: var(--negro); }
+
+  .nosotros-visual {
+    position: relative;
+    height: 210px;
+    margin-bottom: 36px;
+    border-radius: var(--radio);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--negro-suave) 0%, #1a1200 100%);
+    border: 1px solid rgba(201,168,76,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nosotros-texto-arabe {
+    font-size: 88px;
+    opacity: 0.07;
+    position: absolute;
+    right: 16px;
+    bottom: -12px;
+    line-height: 1;
+    filter: blur(1px);
+    user-select: none;
+  }
+
+  .nosotros-patron {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C9A84C' fill-rule='evenodd'%3E%3Cpath d='M30 0l30 30-30 30L0 30z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 40px 40px;
+  }
+
+  .nosotros-logo-centro {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .nosotros-ea {
+    font-family: 'Cinzel', serif;
+    font-size: 60px;
+    font-weight: 600;
+    color: var(--dorado);
+    line-height: 1;
+    display: block;
+    animation: brillar-ea 3.5s ease-in-out infinite;
+    letter-spacing: 4px;
+  }
+  @keyframes brillar-ea {
+    0%, 100% { text-shadow: 0 0 20px rgba(201,168,76,0.3); }
+    50% { text-shadow: 0 0 55px rgba(201,168,76,0.75), 0 0 90px rgba(201,168,76,0.25); }
+  }
+  .nosotros-desde { font-size: 10px; letter-spacing: 4px; color: var(--crema-apagada); text-transform: uppercase; opacity: 0.55; margin-top: 6px; }
+
+  .lista-valores { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .lista-valores li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px;
+    background: var(--negro-tarjeta);
+    border-radius: 12px;
+    border-left: 2px solid var(--dorado);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .lista-valores li:hover { background: rgba(201,168,76,0.04); }
+
+  .valor-icono {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--dorado-tenue);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--dorado);
+    flex-shrink: 0;
+  }
+  .valor-icono svg { width: 18px; height: 18px; }
+
+  .valor-texto strong { display: block; font-size: 13px; color: var(--crema); margin-bottom: 3px; font-weight: 600; }
+  .valor-texto span { font-size: 12px; color: var(--texto-apagado); line-height: 1.55; }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN TESTIMONIOS
+  ══════════════════════════════════════════ */
+  .seccion-testimonios { background: var(--negro); }
+
+  .testimonios-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .tarjeta-testimonio {
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.13);
+    border-radius: var(--radio);
+    padding: 24px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .tarjeta-testimonio:hover { border-color: rgba(201,168,76,0.3); }
+
+  .tarjeta-testimonio::before {
+    content: '\201C';
+    position: absolute;
+    top: -8px; right: 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 90px;
+    color: rgba(201,168,76,0.07);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .estrellas-calificacion {
+    display: flex; gap: 3px;
+    margin-bottom: 12px;
+  }
+  .estrellas-calificacion span {
+    color: var(--dorado);
+    font-size: 14px;
+    animation: aparecer-estrella 0.4s ease both;
+  }
+  .estrellas-calificacion span:nth-child(1) { animation-delay: 0.05s; }
+  .estrellas-calificacion span:nth-child(2) { animation-delay: 0.10s; }
+  .estrellas-calificacion span:nth-child(3) { animation-delay: 0.15s; }
+  .estrellas-calificacion span:nth-child(4) { animation-delay: 0.20s; }
+  .estrellas-calificacion span:nth-child(5) { animation-delay: 0.25s; }
+  @keyframes aparecer-estrella {
+    from { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  .testimonio-texto {
+    font-size: 14px;
+    color: var(--crema-apagada);
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonio-autor {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .testimonio-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dorado-oscuro), var(--dorado));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--negro);
+    flex-shrink: 0;
+    box-shadow: 0 0 14px rgba(201,168,76,0.28);
+  }
+  .testimonio-nombre { font-size: 13px; font-weight: 600; color: var(--crema); }
+  .testimonio-ubicacion { font-size: 11px; color: var(--texto-apagado); margin-top: 1px; }
+
+  .testimonio-verificacion {
+    display: inline-block;
+    margin-left: auto;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--dorado);
+    background: rgba(201,168,76,0.09);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .resumen-calificacion {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.14);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-top: 24px;
+  }
+  .calificacion-numero-grande {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    font-weight: 700;
+    color: var(--dorado);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .calificacion-descripcion { font-size: 12px; color: var(--crema-apagada); line-height: 1.55; }
+  .calificacion-descripcion strong { display: block; color: var(--crema); font-size: 13px; margin-bottom: 2px; }
+
+  .testimonios-cta { text-align: center; margin-top: 28px; }
+
+  /* ══════════════════════════════════════════
+     SECCIÓN CONTACTO
+  ══════════════════════════════════════════ */
+  .seccion-contacto { background: var(--negro-suave); }
+
+  .tarjetas-contacto { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+
+  .tarjeta-contacto {
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.14);
+    border-radius: var(--radio);
+    padding: 20px;
+    display: flex; align-items: center; gap: 16px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .tarjeta-contacto:hover { border-color: rgba(201,168,76,0.35); }
+  .tarjeta-contacto:active { border-color: var(--dorado); }
+
+  .contacto-icono {
+    width: 50px; height: 50px; border-radius: 13px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.18);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--dorado);
+  }
+  .contacto-icono svg { width: 22px; height: 22px; }
+  .tarjeta-contacto--wa .contacto-icono { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.25); color: var(--verde-wa); }
+
+  .contacto-etiqueta { font-size: 11px; color: var(--texto-apagado); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .contacto-valor { font-size: 14px; color: var(--crema); font-weight: 500; }
+  .tarjeta-contacto--wa .contacto-valor { color: var(--verde-wa); }
+
+  .contacto-flecha { margin-left: auto; color: var(--texto-apagado); font-size: 18px; }
+
+  .mapa-ubicacion {
+    margin-top: 28px;
+    background: var(--negro-tarjeta);
+    border: 1px solid rgba(201,168,76,0.14);
+    border-radius: var(--radio);
+    padding: 26px;
+    text-align: center;
+  }
+
+  .mapa-icono-ubicacion {
+    width: 52px; height: 52px;
+    margin: 0 auto 12px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--dorado);
+  }
+  .mapa-icono-ubicacion svg { width: 24px; height: 24px; }
+
+  .mapa-direccion { font-size: 13px; color: var(--crema-apagada); line-height: 1.65; }
+  .mapa-direccion strong { color: var(--dorado); font-size: 14px; display: block; margin-bottom: 5px; }
+
+  .enlace-google-maps {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--dorado);
+    text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 9px 20px;
+    border-radius: 50px;
+    transition: background 0.2s, border-color 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .enlace-google-maps:hover { background: var(--dorado-tenue); border-color: rgba(201,168,76,0.5); }
+
+  /* ══════════════════════════════════════════
+     BOTÓN FLOTANTE UBICACIÓN
+  ══════════════════════════════════════════ */
+  .boton-flotante-ubi {
+    position: fixed;
+    bottom: 24px;
+    right: 80px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--negro-suave);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 14px;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    text-decoration: none;
+    box-shadow: 0 6px 28px rgba(201,168,76,0.35), 0 0 0 1px rgba(201,168,76,0.2);
+    transition: transform 0.2s, box-shadow 0.2s, border-radius 0.3s, width 0.3s, padding 0.3s;
+    animation: reboteflotante 3s ease-in-out infinite 2.5s;
+    overflow: hidden;
+    justify-content: center;
+  }
+  .boton-flotante-ubi svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .boton-flotante-ubi .etiqueta-flotante { display: none; white-space: nowrap; }
+  @keyframes reboteflotante {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(201,168,76,0.5); }
+  }
+
+  /* ══════════════════════════════════════════
+     BOTÓN FLOTANTE WHATSAPP
+  ══════════════════════════════════════════ */
+  .boton-flotante-wa {
+    position: fixed;
+    bottom: 24px; right: 20px;
+    z-index: 100;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--verde-wa);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 14px;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    text-decoration: none;
+    box-shadow: 0 6px 28px rgba(37,211,102,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: rebote-flotante 3s ease-in-out infinite 2.5s;
+    overflow: hidden;
+    justify-content: center;
+  }
+  .boton-flotante-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .boton-flotante-wa .etiqueta-flotante { display: none; white-space: nowrap; }
+  @keyframes rebote-flotante {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(37,211,102,0.5); }
+  }
+
+  /* ══════════════════════════════════════════
+     PIE DE PÁGINA
+  ══════════════════════════════════════════ */
+  .pie-pagina {
+    background: var(--negro-tarjeta);
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 44px 24px 100px;
+    text-align: center;
+  }
+
+  .pie-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--dorado);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .pie-eslogan { font-size: 11px; color: var(--texto-apagado); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px; }
+
+  .pie-separador {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.35), transparent);
+    margin: 0 auto 28px;
+  }
+
+  .pie-navegacion { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+  .pie-navegacion a {
+    font-size: 12px; color: var(--crema-apagada);
+    text-decoration: none; letter-spacing: 0.5px;
+    opacity: 0.65;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .pie-navegacion a:hover { opacity: 1; color: var(--dorado); }
+
+  .pie-derechos { font-size: 11px; color: rgba(255,255,255,0.18); line-height: 1.9; }
+
+  /* ══════════════════════════════════════════
+     ANIMACIONES GLOBALES
+  ══════════════════════════════════════════ */
+  @keyframes subir-opacidad {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .revelar {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .revelar.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .revelar-retraso-1 { transition-delay: 0.1s; }
+  .revelar-retraso-2 { transition-delay: 0.2s; }
+  .revelar-retraso-3 { transition-delay: 0.3s; }
+
+  /* ══════════════════════════════════════════
+     DISEÑO ADAPTABLE (RESPONSIVE)
+  ══════════════════════════════════════════ */
+  @media (min-width: 600px) {
+    .cuadricula-categorias { grid-template-columns: repeat(4, 1fr); }
+    .tarjeta-categoria--destacada { grid-column: span 2; }
+  }
+
+  /* ══════════════════════════════════════════
+     FOTOS: LAYOUT ESCRITORIO
+  ══════════════════════════════════════════ */
+  @media (min-width: 700px) {
+    .fotos-grid {
+      flex-direction: row;       
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .foto-card--fachada {
+      flex: 1 1 50%;
+      width: auto;               
+      aspect-ratio: 430 / 393;
+    }
+    .fotos-fila-pequenas {
+      flex: 1 1 50%;
+      flex-direction: column;  
+      gap: 10px;
+    }
+
+   
+    .fotos-fila-pequenas .foto-card--alta {
+      flex: 1 1 0;
+      min-height: 0;
+      aspect-ratio: unset;       /* en desktop el flex-grow controla la altura */
+      width: 100%;
+    }
+  }
+
+  /* ══════════════════════════════════════════
+     BOXED LAYOUT — SOLO EN PC 
+  ══════════════════════════════════════════ */
+  @media (min-width: 1024px) {
+
+    /* ── Wrapper interno reutilizable ── */
+    :root {
+      --box-width: 1100px;
+      --box-padding: 48px;
+    }
+
+    /* Todas las secciones que usan padding lateral reciben el wrapper */
+    .seccion-heroe,
+    .barra-estadisticas,
+    .banner-promo,
+    .seccion.seccion-categorias,
+    .seccion-fotos,
+    .seccion-productos,
+    .seccion-decants,
+    .seccion-vip,
+    .seccion.seccion-nosotros,
+    .seccion.seccion-testimonios,
+    .seccion.seccion-contacto,
+    .pie-pagina {
+      padding-left: max(var(--box-padding), calc((100% - var(--box-width)) / 2));
+      padding-right: max(var(--box-padding), calc((100% - var(--box-width)) / 2));
+    }
+
+    .seccion-heroe {
+      padding-top: 80px;
+      padding-bottom: 140px;
+    }
+
+    .barra-estadisticas {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .banner-promo {
+      padding-top: 18px;
+      padding-bottom: 18px;
+    }
+
+    /* La galería de fotos llena el ancho del wrapper */
+    .fotos-grid {
+      max-width: 100%;
+    }
+
+    /* Botones flotantes: ajuste para que no queden pegados al borde del box */
+    .boton-flotante-wa {
+      border-radius: 50px;
+      width: auto;
+      height: auto;
+      padding: 14px 22px;
+    }
+    .boton-flotante-wa .etiqueta-flotante { display: inline; }
+
+    .boton-flotante-ubi {
+      border-radius: 50px;
+      width: auto;
+      height: auto;
+      padding: 14px 22px;
+      right: 220px;
+    }
+    .boton-flotante-ubi .etiqueta-flotante { display: inline; }
+
+  
+    .seccion-titulo {
+      font-size: 44px;
+    }
+
+    .cuadricula-categorias {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .tarjeta-categoria--destacada {
+      grid-column: span 2;
+    }
+  }
+
+  /* Botones flotantes en tablet (600-1023px) */
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .boton-flotante-wa {
+      border-radius: 50px;
+      width: auto;
+      height: auto;
+      padding: 14px 22px;
+    }
+    .boton-flotante-wa .etiqueta-flotante { display: inline; }
+
+    .boton-flotante-ubi {
+      border-radius: 50px;
+      width: auto;
+      height: auto;
+      padding: 14px 22px;
+      right: 220px;
+    }
+    .boton-flotante-ubi .etiqueta-flotante { display: inline; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="pagina-wrapper">
+
+<!-- ══════════════════════════════════════════
+     HÉROE PRINCIPAL
+══════════════════════════════════════════ -->
+<section class="seccion-heroe">
+
+  <canvas id="lienzo-particulas"></canvas>
+  <div class="linea-lateral linea-lateral--izquierda"></div>
+  <div class="linea-lateral linea-lateral--derecha"></div>
+
+  <div class="heroe-contenido">
+
+    <span class="heroe-etiqueta">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="1.5" fill="currentColor"/></svg>
+      El Banco, Magdalena
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="1.5" fill="currentColor"/></svg>
+    </span>
+
+    <div class="heroe-logo-circulo">
+      <span class="heroe-logo-texto"><img src="img/Logo.png" width="140" height="140" alt="Logo del local"></span>
+    </div>
+
+    <h1 class="heroe-titulo">El <span>Árabe</span></h1>
+    <p class="heroe-subtitulo">Perfumería &amp; Boutique</p>
+
+    <!-- Dirección visible en el héroe -->
+    <div class="heroe-direccion">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      Cra 4 #6-20 · El Banco, Magdalena, Colombia
+    </div>
+
+    <div class="divisor-dorado"></div>
+
+    <p class="heroe-descripcion">
+      Fragancias originales &amp; exclusivas.<br>
+      Polos para hombre. Accesorios únicos.<br>
+      El lujo que mereces, al alcance de tu mano.
+    </p>
+
+    <div class="heroe-grupo-botones">
+      <a class="boton-wa" href="https://wa.me/573023722959?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20quiero%20saber%20m%C3%A1s%20sobre%20sus%20productos" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escríbenos por WhatsApp
+      </a>
+      <a class="boton-contorno" href="#categorias">
+        Ver Productos
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 9l5 5 5-5"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     BARRA DE ESTADÍSTICAS
+══════════════════════════════════════════ -->
+<div class="barra-estadisticas revelar" id="barra-estadisticas">
+  <div class="estadistica">
+    <span class="estadistica-numero" id="cont-seguidores">0</span>
+    <span class="estadistica-etiqueta">Seguidores</span>
+  </div>
+  <div class="estadistica">
+    <span class="estadistica-numero" id="cont-publicaciones">0</span>
+    <span class="estadistica-etiqueta">Publicaciones</span>
+  </div>
+  <div class="estadistica">
+    <span class="estadistica-numero">100<span style="font-size:18px">%</span></span>
+    <span class="estadistica-etiqueta">Originales</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PROMOCIÓN DEL MES
+══════════════════════════════════════════ -->
+<div class="banner-promo revelar" id="promo">
+  <div class="banner-promo-inner">
+    <span class="banner-promo-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="url(#flama-grad)">
+        <defs>
+          <linearGradient id="flama-grad" x1="0%" y1="100%" x2="60%" y2="0%">
+            <stop offset="0%" stop-color="#FF4500"/>
+            <stop offset="45%" stop-color="#FF8C00"/>
+            <stop offset="100%" stop-color="#FFD700"/>
+          </linearGradient>
+        </defs>
+        <path d="M13.5 0.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5 0.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+      </svg>
+      Promoción del Mes · El Banco, Magdalena
+    </span>
+    <h2 class="banner-promo-titulo">Kit <span>Fragancia + Polo</span></h2>
+    <p class="banner-promo-desc">Lleva tu perfume favorito y un polo premium de hombre a un precio especial. Solo por tiempo limitado en nuestra tienda.</p>
+    <div class="banner-promo-precio">
+      <span class="precio-antes">$150.000</span>
+      <span class="precio-ahora">$119.900</span>
+      <span class="precio-descuento">20% OFF</span>
+    </div>
+    <a class="banner-promo-cta" href="https://wa.me/573023722959?text=Hola!%20Quiero%20aprovechar%20la%20Promoci%C3%B3n%20del%20Mes%20del%20Kit%20Fragancia%20%2B%20Polo" target="_blank" rel="noopener">
+      ¡Quiero esta oferta!
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECCIÓN CATEGORÍAS DE PRODUCTOS
+══════════════════════════════════════════ -->
+<section class="seccion seccion-categorias" id="categorias">
+  <span class="seccion-etiqueta revelar">Nuestros Productos · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Lo que <em>tenemos</em> para ti</h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">Calidad y exclusividad en cada rincón de nuestra boutique en El Banco. Todo seleccionado con gusto y pasión.</p>
+
+  <div class="cuadricula-categorias">
+
+    <a class="tarjeta-categoria tarjeta-categoria--destacada revelar" href="https://wa.me/573023722959?text=Quiero%20informaci%C3%B3n%20sobre%20las%20fragancias%20disponibles" target="_blank" rel="noopener">
+      <div class="categoria-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="8" width="10" height="14" rx="3"/>
+          <path d="M9 8V5h6v3"/>
+          <path d="M11 3h2"/>
+          <path d="M10 12c0 0 1.5 1.5 4 0"/>
+        </svg>
+      </div>
+      <div>
+        <div class="categoria-nombre">Fragancias</div>
+        <p class="categoria-descripcion">Originales &amp; exclusivas. Aromas que cuentan historias, importados para ti en El Banco, Magdalena.</p>
+      </div>
+    </a>
+
+    <a class="tarjeta-categoria revelar revelar-retraso-1" href="https://wa.me/573023722959?text=Quiero%20ver%20los%20polos%20para%20hombre%20disponibles" target="_blank" rel="noopener">
+      <div class="categoria-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.86H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.86l.58-3.57a2 2 0 0 0-1.34-2.11z"/>
+        </svg>
+      </div>
+      <div class="categoria-nombre">Polos</div>
+      <p class="categoria-descripcion">Estilo y comodidad para hombre.</p>
+    </a>
+
+    <a class="tarjeta-categoria revelar revelar-retraso-2" href="https://wa.me/573023722959?text=Quiero%20ver%20los%20accesorios%20de%20boutique" target="_blank" rel="noopener">
+      <div class="categoria-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div class="categoria-nombre">Boutique</div>
+      <p class="categoria-descripcion">Accesorios únicos y exclusivos.</p>
+    </a>
+
+    <a class="tarjeta-categoria revelar revelar-retraso-1" href="https://wa.me/573023722959?text=Me%20interesa%20un%20perfume%20preparado" target="_blank" rel="noopener">
+      <div class="categoria-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6v8l4 8H5l4-8V3z"/>
+          <line x1="9" y1="8" x2="15" y2="8"/>
+        </svg>
+      </div>
+      <div class="categoria-nombre">Preparados</div>
+      <p class="categoria-descripcion">Fragancias a tu medida.</p>
+    </a>
+
+    <a class="tarjeta-categoria revelar revelar-retraso-2" href="https://wa.me/573023722959?text=Quiero%20saber%20sobre%20los%20concursos%20y%20promociones" target="_blank" rel="noopener">
+      <div class="categoria-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 12 20 22 4 22 4 12"/>
+          <rect x="2" y="7" width="20" height="5"/>
+          <line x1="12" y1="22" x2="12" y2="7"/>
+          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+      </div>
+      <div class="categoria-nombre">Concursos</div>
+      <p class="categoria-descripcion">Promos y sorteos exclusivos.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     PRODUCTOS DESTACADOS
+══════════════════════════════════════════ -->
+<section class="seccion-productos revelar" id="destacados">
+  <span class="seccion-etiqueta revelar">Lo más pedido · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Productos <em>destacados</em></h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">Los favoritos de nuestros clientes en El Banco y toda la región del Magdalena.</p>
+
+  <div class="productos-scroll-wrapper">
+  <div class="productos-grid">
+
+    <a class="producto-card revelar" href="https://wa.me/573023722959?text=Quiero%20informaci%C3%B3n%20sobre%20fragancias%20arabas" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="14" rx="3"/><path d="M9 8V5h6v3"/><path d="M11 3h2"/><path d="M10 12c0 0 1.5 1.5 4 0"/></svg>
+          <span>Foto del producto</span>
+        </div>
+        <span class="producto-badge producto-badge--nuevo">Nuevo</span>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Oud Royal</div>
+        <div class="producto-desc">Fragancia árabe de larga duración. Amaderado e intenso.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="producto-card revelar revelar-retraso-1" href="https://wa.me/573023722959?text=Quiero%20informaci%C3%B3n%20sobre%20perfumes%20europeos" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="14" rx="3"/><path d="M9 8V5h6v3"/><path d="M11 3h2"/><path d="M10 12c0 0 1.5 1.5 4 0"/></svg>
+          <span>Foto del producto</span>
+        </div>
+        <span class="producto-badge">Top ventas</span>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Floral Élite</div>
+        <div class="producto-desc">Colección floral importada. Ideal para dama.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="producto-card revelar revelar-retraso-2" href="https://wa.me/573023722959?text=Quiero%20ver%20los%20polos%20disponibles" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.86H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.86l.58-3.57a2 2 0 0 0-1.34-2.11z"/></svg>
+          <span>Foto del producto</span>
+        </div>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Polo Premium</div>
+        <div class="producto-desc">Polos para hombre. Tallas S, M, L, XL disponibles.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="producto-card revelar revelar-retraso-1" href="https://wa.me/573023722959?text=Quiero%20saber%20sobre%20The%20Decants%20Box" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span>Foto del producto</span>
+        </div>
+        <span class="producto-badge producto-badge--nuevo">Exclusivo</span>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Decants Box</div>
+        <div class="producto-desc">5 fragancias en presentación premium para descubrir.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="producto-card revelar revelar-retraso-2" href="https://wa.me/573023722959?text=Quiero%20un%20perfume%20preparado%20a%20medida" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v4l-3 3-3-3V3z"/><path d="M12 10v4"/><path d="M7 14h10l1 7H6l1-7z"/><path d="M7 14c0-2.7 2-5 5-5s5 2.3 5 5"/></svg>
+          <span>Foto del producto</span>
+        </div>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Preparado Único</div>
+        <div class="producto-desc">Tu fragancia creada a tu medida. Solo en El Banco.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="producto-card revelar revelar-retraso-3" href="https://wa.me/573023722959?text=Quiero%20ver%20los%20accesorios" target="_blank" rel="noopener">
+      <div class="producto-imagen">
+        <div class="producto-imagen-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Foto del producto</span>
+        </div>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Accesorios</div>
+        <div class="producto-desc">Piezas únicas de boutique para completar tu estilo.</div>
+        <div class="producto-precio">
+          Consultar
+          <div class="producto-precio-sub">Precio vía WhatsApp</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOTOS REALES DE LA TIENDA
+══════════════════════════════════════════ -->
+<section class="seccion-fotos revelar" id="tienda">
+  <span class="seccion-etiqueta revelar">Nuestra Tienda · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Conócenos <em>por dentro</em></h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">Visítanos en el corazón de El Banco, Magdalena. Un espacio diseñado para que vivas la experiencia de las mejores fragancias.</p>
+
+  <div class="fotos-grid">
+
+    <!-- Foto fachada: 430×393 — arriba en móvil, izquierda en escritorio -->
+    <div class="foto-card foto-card--fachada revelar">
+      <img src="img/fachada.webp" alt="Fachada de El Árabe Perfumería en El Banco, Magdalena">
+      <div class="foto-etiqueta">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Fachada · Cra 4 #6-20 · El Banco, Magdalena
+      </div>
+    </div>
+
+    <!-- Las 3 fotos pequeñas: en fila debajo (móvil) o columna derecha (escritorio) -->
+    <div class="fotos-fila-pequenas">
+
+      <!-- Foto estantería: 430×574 -->
+      <div class="foto-card foto-card--alta revelar revelar-retraso-1">
+        <img src="img/estanteria.webp" alt="Estantería de perfumes El Árabe">
+        <div class="foto-etiqueta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Estantería
+        </div>
+      </div>
+
+      <!-- Foto perfumes: 430×574 -->
+      <div class="foto-card foto-card--alta revelar revelar-retraso-2">
+        <img src="img/perfumes.webp" alt="Colección de perfumes originales">
+        <div class="foto-etiqueta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="14" rx="3"/><path d="M9 8V5h6v3"/><path d="M11 3h2"/></svg>
+          Perfumes
+        </div>
+      </div>
+
+      <!-- Foto del negocio: 430×574 -->
+      <div class="foto-card foto-card--alta revelar revelar-retraso-3">
+        <img src="img/local.webp" alt="Interior del negocio El Árabe">
+        <div class="foto-etiqueta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          El Negocio
+        </div>
+      </div>
+
+    </div><!-- /fotos-fila-pequenas -->
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     THE DECANTS BOX
+══════════════════════════════════════════ -->
+<section class="seccion-decants" id="decants">
+  <span class="seccion-etiqueta revelar">Experiencia única · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Descubre sin <em>comprometerte</em></h2>
+
+  <div class="decants-card revelar">
+    <div class="decants-badge">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="color:var(--dorado)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Producto Exclusivo
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="color:var(--dorado)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+    <h3 class="decants-titulo">The <span>Decants</span> Box</h3>
+    <p class="decants-desc">
+      Prueba varias fragancias sin comprar el frasco completo. La forma inteligente de encontrar tu perfume ideal, disponible en El Banco, Magdalena.
+    </p>
+
+    <div class="decants-features">
+      <div class="decants-feature">
+        <div class="decants-feature-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span><strong>5 perfumes seleccionados</strong> — curados por nuestros expertos</span>
+      </div>
+      <div class="decants-feature">
+        <div class="decants-feature-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <span><strong>Presentación premium</strong> — perfecta para regalo o para ti</span>
+      </div>
+      <div class="decants-feature">
+        <div class="decants-feature-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <span><strong>Ideal para descubrir</strong> — antes de invertir en el frasco completo</span>
+      </div>
+      <div class="decants-feature">
+        <div class="decants-feature-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <span><strong>Envío disponible</strong> — desde El Banco, Magdalena a toda la región</span>
+      </div>
+    </div>
+
+    <a class="boton-wa" href="https://wa.me/573023722959?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20The%20Decants%20Box" target="_blank" rel="noopener" style="max-width:100%; margin-top:4px;">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir mi Decants Box
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CLUB PERFULOVERS (VIP)
+══════════════════════════════════════════ -->
+<section class="seccion-vip revelar" id="vip">
+  <div class="vip-header revelar">
+    <span class="vip-corona">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--dorado)"><path d="M2 20h20"/><path d="M5 20V8l7-4 7 4v12"/><path d="M2 20L5 8M22 20L19 8M12 4v4"/><path d="M5 8l7 4 7-4"/></svg>
+    </span>
+    <p class="vip-subtitulo">Exclusivo · El Banco, Magdalena</p>
+    <h2 class="vip-titulo">Club <em>Perfulovers</em></h2>
+    <p class="vip-desc">Sé parte de nuestra comunidad VIP y disfruta de beneficios únicos que solo los verdaderos amantes de las fragancias merecen.</p>
+  </div>
+
+  <div class="vip-card revelar revelar-retraso-1">
+    <div class="vip-beneficios">
+
+      <div class="vip-beneficio">
+        <div class="vip-beneficio-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="vip-beneficio-texto">
+          <strong>Acceso anticipado a lanzamientos</strong>
+          <span>Sé el primero en conocer las nuevas fragancias antes que nadie en El Banco, Magdalena.</span>
+        </div>
+      </div>
+
+      <div class="vip-beneficio">
+        <div class="vip-beneficio-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="vip-beneficio-texto">
+          <strong>10% de descuento permanente</strong>
+          <span>En todas tus compras, siempre. Sin fecha de vencimiento, sin condiciones.</span>
+        </div>
+      </div>
+
+      <div class="vip-beneficio">
+        <div class="vip-beneficio-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="vip-beneficio-texto">
+          <strong>Beneficios de cumpleaños</strong>
+          <span>Una sorpresa especial para ti el mes de tu cumpleaños. Porque lo mereces.</span>
+        </div>
+      </div>
+
+      <div class="vip-beneficio">
+        <div class="vip-beneficio-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <div class="vip-beneficio-texto">
+          <strong>Acceso a promociones exclusivas</strong>
+          <span>Ofertas y descuentos que solo los miembros VIP de nuestra comunidad reciben.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="boton-vip" href="https://wa.me/573023722959?text=Hola!%20Quiero%20unirme%20al%20Club%20Perfulovers%20VIP" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M2 20h20"/><path d="M5 20V8l7-4 7 4v12"/><path d="M5 8l7 4 7-4"/></svg>
+      QUIERO SER VIP
+    </a>
+    <p class="vip-nota">¿Preguntas? Escríbenos por <a href="https://wa.me/573023722959" target="_blank">WhatsApp</a></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECCIÓN SOBRE NOSOTROS
+══════════════════════════════════════════ -->
+<section class="seccion seccion-nosotros" id="nosotros">
+  <span class="seccion-etiqueta revelar">Nuestra Historia · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Pasión por la <em>esencia</em></h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">Creemos que cada fragancia cuenta una historia. Desde El Banco, Magdalena, seleccionamos perfumes originales, ropa y accesorios exclusivos para quienes valoran la calidad, la elegancia y la autenticidad.</p>
+
+  <div class="nosotros-visual revelar">
+    <div class="nosotros-patron"></div>
+    <span class="nosotros-texto-arabe">العطر</span>
+    <div class="nosotros-logo-centro">
+      <span class="nosotros-ea">EA</span>
+      <span class="nosotros-desde">Perfumería &amp; Boutique</span>
+    </div>
+  </div>
+
+  <ul class="lista-valores">
+
+    <li class="revelar">
+      <div class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
+      <div class="valor-texto">
+        <strong>100% Originales</strong>
+        <span>Solo trabajamos con fragancias y productos auténticos, sin imitaciones. En El Banco, Magdalena.</span>
+      </div>
+    </li>
+
+    <li class="revelar revelar-retraso-1">
+      <div class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="valor-texto">
+        <strong>Atención personalizada</strong>
+        <span>Te ayudamos a encontrar la fragancia perfecta para cada ocasión y cada persona.</span>
+      </div>
+    </li>
+
+    <li class="revelar revelar-retraso-2">
+      <div class="valor-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <div class="valor-texto">
+        <strong>Envíos a toda la región</strong>
+        <span>Desde El Banco, Magdalena llevamos tu pedido a donde estés. Pregunta vía WhatsApp.</span>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECCIÓN TESTIMONIOS
+══════════════════════════════════════════ -->
+<section class="seccion seccion-testimonios" id="testimonios">
+  <span class="seccion-etiqueta revelar">Lo que dicen</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Clientes que nos <em>eligen</em></h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">La confianza de nuestra comunidad en El Banco, Magdalena es nuestro mayor orgullo. Esto es lo que dicen quienes ya nos conocen.</p>
+
+  <div class="testimonios-lista">
+
+    <div class="tarjeta-testimonio revelar">
+      <div class="estrellas-calificacion">
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+      </div>
+      <p class="testimonio-texto">Me encantó el servicio, me ayudaron a encontrar la fragancia perfecta para regalarle a mi esposo. El olor es increíble y muy duradero. ¡100% recomendado!</p>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar">LM</div>
+        <div>
+          <div class="testimonio-nombre">Laura M.</div>
+          <div class="testimonio-ubicacion">El Banco, Magdalena</div>
+        </div>
+        <span class="testimonio-verificacion">Cliente frecuente</span>
+      </div>
+    </div>
+
+    <div class="tarjeta-testimonio revelar revelar-retraso-1">
+      <div class="estrellas-calificacion">
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+      </div>
+      <p class="testimonio-texto">Compré un polo y quedé sorprendido con la calidad. Atención muy amable y rápida. Ya estoy mirando qué más tienen para comprar. Volveré pronto.</p>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar">CA</div>
+        <div>
+          <div class="testimonio-nombre">Carlos A.</div>
+          <div class="testimonio-ubicacion">El Banco, Magdalena</div>
+        </div>
+        <span class="testimonio-verificacion">Compra verificada</span>
+      </div>
+    </div>
+
+    <div class="tarjeta-testimonio revelar revelar-retraso-2">
+      <div class="estrellas-calificacion">
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+      </div>
+      <p class="testimonio-texto">El perfume preparado que me hicieron es único, lo mandaron a mi casa sin problema. La atención por WhatsApp fue súper rápida. ¡Un negocio de confianza en El Banco!</p>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar">SR</div>
+        <div>
+          <div class="testimonio-nombre">Sandra R.</div>
+          <div class="testimonio-ubicacion">Mompox, Bolívar</div>
+        </div>
+        <span class="testimonio-verificacion">Envío a domicilio</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="resumen-calificacion revelar">
+    <div class="calificacion-numero-grande">5.0</div>
+    <div class="calificacion-descripcion">
+      <div class="estrellas-calificacion" style="margin-bottom:5px;">
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+      </div>
+      <strong>Calificación perfecta</strong>
+      Basada en la experiencia de nuestros clientes en El Banco, Magdalena y la región.
+    </div>
+  </div>
+
+  <div class="testimonios-cta revelar">
+    <a class="boton-wa" href="https://wa.me/573023722959?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" style="display:inline-flex; width:auto; max-width:280px; margin:0 auto;">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Sé el próximo cliente feliz
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECCIÓN CONTACTO
+══════════════════════════════════════════ -->
+<section class="seccion seccion-contacto" id="contacto">
+  <span class="seccion-etiqueta revelar">Contacto · El Banco, Magdalena</span>
+  <h2 class="seccion-titulo revelar revelar-retraso-1">Estamos <em>para ti</em></h2>
+  <p class="seccion-cuerpo revelar revelar-retraso-2">Escríbenos y te respondemos de inmediato. Estamos en El Banco, Magdalena y listos para ayudarte a encontrar tu fragancia perfecta.</p>
+
+  <div class="tarjetas-contacto">
+
+    <a class="tarjeta-contacto tarjeta-contacto--wa revelar" href="https://wa.me/573023722959?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">
+      <div class="contacto-icono">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <div>
+        <div class="contacto-etiqueta">WhatsApp</div>
+        <div class="contacto-valor">302 372 2959</div>
+      </div>
+      <span class="contacto-flecha">&#8594;</span>
+    </a>
+
+    <div class="tarjeta-contacto revelar revelar-retraso-1">
+      <div class="contacto-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <div>
+        <div class="contacto-etiqueta">Dirección</div>
+        <div class="contacto-valor">Cra 4 #6-20 · El Banco, Magdalena</div>
+      </div>
+    </div>
+
+    <div class="tarjeta-contacto revelar revelar-retraso-2">
+      <div class="contacto-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.12-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="contacto-etiqueta">Teléfono</div>
+        <div class="contacto-valor">302 372 2959</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mapa-ubicacion revelar">
+    <div class="mapa-icono-ubicacion">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+      </svg>
+    </div>
+    <div class="mapa-direccion">
+      <strong>El Árabe Perfumería · El Banco, Magdalena</strong>
+      Cra 4 #6-20 · El Banco, Magdalena, Colombia
+    </div>
+    <a class="enlace-google-maps" href="https://maps.google.com/?q=El+Banco+Magdalena+Colombia+Cra+4+%236-20" target="_blank" rel="noopener">
+      ¿Cómo encontrarnos?
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- PIE DE PÁGINA -->
+<footer class="pie-pagina">
+  <div class="pie-logo">EA</div>
+  <div class="pie-eslogan">Perfumería &amp; Boutique · El Banco, Magdalena</div>
+  <div class="pie-separador"></div>
+
+  <nav class="pie-navegacion">
+    <a href="#categorias">Productos</a>
+    <a href="#destacados">Destacados</a>
+    <a href="#decants">Decants Box</a>
+    <a href="#vip">Club VIP</a>
+    <a href="#tienda">Tienda</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://instagram.com/perfumeriaelarabe" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+
+  <a class="boton-wa" href="https://wa.me/573023722959?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20quiero%20saber%20m%C3%A1s" target="_blank" rel="noopener" style="max-width:260px; margin:0 auto 28px;">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Contactar ahora
+  </a>
+
+  <div class="pie-derechos">
+    &copy; Copyright 2026 Damian Ospino<br>El Banco, Magdalena &mdash; Colombia
+  </div>
+</footer>
+
+</div><!-- /pagina-wrapper -->
+
+<!-- BOTÓN FLOTANTE UBICACIÓN -->
+<a class="boton-flotante-ubi" href="https://maps.google.com/?q=El+Banco+Magdalena+Colombia+Cra+4+%236-20" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.2848 18.9935C12.1567 19.0875 12.0373 19.1728 11.9282 19.2493C11.8118 19.1721 11.6827 19.0833 11.5427 18.9832C10.8826 18.5109 10.0265 17.8176 9.18338 16.9529C7.45402 15.1792 6 12.9151 6 10.5C6 7.18629 8.68629 4.5 12 4.5C15.3137 4.5 18 7.18629 18 10.5C18 12.8892 16.4819 15.1468 14.6893 16.9393C13.8196 17.8091 12.9444 18.5099 12.2848 18.9935ZM19.5 10.5C19.5 16.5 12 21 12 21C11.625 21 4.5 16.5 4.5 10.5C4.5 6.35786 7.85786 3 12 3C16.1421 3 19.5 6.35786 19.5 10.5ZM13.5 10.5C13.5 11.3284 12.8284 12 12 12C11.1716 12 10.5 11.3284 10.5 10.5C10.5 9.67157 11.1716 9 12 9C12.8284 9 13.5 9.67157 13.5 10.5ZM15 10.5C15 12.1569 13.6569 13.5 12 13.5C10.3431 13.5 9 12.1569 9 10.5C9 8.84315 10.3431 7.5 12 7.5C13.6569 7.5 15 8.84315 15 10.5Z" fill="#fff"></path></svg>
+  <span class="etiqueta-flotante">¿Cómo llegar?</span>
+</a>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="boton-flotante-wa" href="https://wa.me/573023722959?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="etiqueta-flotante">+57 3023722959</span>
+</a>
+
+<script>
+/* PARTÍCULAS DORADAS */
+const lienzo = document.getElementById('lienzo-particulas');
+const ctx    = lienzo.getContext('2d');
+let particulas = [];
+
+function ajustarLienzo() {
+  lienzo.width  = window.innerWidth;
+  lienzo.height = lienzo.parentElement.offsetHeight;
+}
+
+class Particula {
+  constructor() { this.reiniciar(); this.y = Math.random() * lienzo.height; }
+
+  reiniciar() {
+    this.x        = Math.random() * lienzo.width;
+    this.y        = lienzo.height + 10;
+    this.tamano   = Math.random() * 2.5 + 0.5;
+    this.velY     = Math.random() * 0.6 + 0.2;
+    this.velX     = (Math.random() - 0.5) * 0.4;
+    this.opacidad = Math.random() * 0.6 + 0.1;
+    this.vida     = 0;
+    this.vidaMax  = Math.random() * 200 + 100;
+  }
+
+  actualizar() {
+    this.x += this.velX;
+    this.y -= this.velY;
+    this.vida++;
+    const progreso = this.vida / this.vidaMax;
+    this.opacidadActual = this.opacidad * (
+      progreso < 0.2 ? progreso / 0.2 :
+      progreso > 0.8 ? (1 - progreso) / 0.2 : 1
+    );
+    if (this.vida >= this.vidaMax || this.y < -10) this.reiniciar();
+  }
+
+  dibujar() {
+    ctx.save();
+    ctx.globalAlpha = this.opacidadActual;
+    ctx.fillStyle   = `hsl(${42 + Math.random() * 10}, 80%, 60%)`;
+    ctx.shadowBlur  = 6;
+    ctx.shadowColor = '#C9A84C';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.tamano, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function iniciarParticulas() {
+  particulas = [];
+  for (let i = 0; i < 60; i++) particulas.push(new Particula());
+}
+
+function animarParticulas() {
+  ctx.clearRect(0, 0, lienzo.width, lienzo.height);
+  particulas.forEach(p => { p.actualizar(); p.dibujar(); });
+  requestAnimationFrame(animarParticulas);
+}
+
+ajustarLienzo();
+iniciarParticulas();
+animarParticulas();
+window.addEventListener('resize', () => { ajustarLienzo(); iniciarParticulas(); });
+
+/* CONTADORES */
+function animarContador(elemento, objetivo) {
+  let actual    = 0;
+  const duracion = 1600;
+  const paso     = objetivo / (duracion / 16);
+
+  const actualizar = () => {
+    actual = Math.min(actual + paso, objetivo);
+    elemento.textContent = Math.floor(actual).toLocaleString();
+    if (actual < objetivo) requestAnimationFrame(actualizar);
+  };
+  actualizar();
+}
+
+let contadoresEjecutados = false;
+function ejecutarContadores() {
+  if (contadoresEjecutados) return;
+  contadoresEjecutados = true;
+  animarContador(document.getElementById('cont-seguidores'), 1816);
+  animarContador(document.getElementById('cont-publicaciones'), 91);
+}
+
+/* REVELADO POR SCROLL */
+const elementosRevelar = document.querySelectorAll('.revelar');
+
+const observadorScroll = new IntersectionObserver((entradas) => {
+  entradas.forEach(entrada => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('visible');
+      if (entrada.target.id === 'barra-estadisticas') ejecutarContadores();
+      observadorScroll.unobserve(entrada.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+elementosRevelar.forEach(el => observadorScroll.observe(el));
+</script>
+</body>
+<!--
+============================================================
+* Proyecto: Landing Page - El Árabe Perfumería & Boutique
+* Ubicación: El Banco, Magdalena, Colombia
+* Desarrollador: Damian Ospino (Full Stack Developer)
+* Año: 2026
+============================================================
+-->
+</html>
